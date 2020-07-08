@@ -13,26 +13,35 @@ describe('Desafio 1 - Etapa 1', function() {
     await driver.quit();
   })
   it('Desafio 1 - Etapa 1', async function() {
+    // Acessar o site
     await driver.get("http://automationpractice.com/index.php")
     await driver.findElement(By.id("search_query_top")).click()
+    // Realizar uma pesquisa do item: T-SHIRT
     await driver.findElement(By.id("search_query_top")).sendKeys("T-SHIRT")
     await driver.findElement(By.name("submit_search")).click()
     {
+      // Validar o retorno da pesquisa
       const elements = await driver.findElements(By.linkText("Faded Short Sleeve T-shirts"))
       assert(elements.length)
     }
+    // Acessar página com dados do item
     await driver.findElement(By.css(".product_img_link > .replace-2x")).click()
+    // Alterar a cor do item
     await driver.findElement(By.id("color_14")).click()
+    // Adicionar item no carrinho
     await driver.findElement(By.css(".exclusive > span")).click()
     await driver.findElement(By.css(".button-medium > span")).click()
     {
+      // Validar dados do item no carrinho (Nome)
       const elements = await driver.findElements(By.linkText("Faded Short Sleeve T-shirts"))
       assert(elements.length)
     }
     {
+      // Validar dados do item no carrinho (Quantidade)
       const value = await driver.findElement(By.name("quantity_1_2_0_0")).getAttribute("value")
       assert(value == "1")
     }
-      assert(await driver.findElement(By.css("#product_price_1_2_0 > .price")).getText() == "$16.51")
+     // Validar dados do item no carrinho (Preço)
+     assert(await driver.findElement(By.css("#product_price_1_2_0 > .price")).getText() == "$16.51")
   })
 })
