@@ -1,0 +1,43 @@
+const { Builder, By, Key, until } = require('selenium-webdriver')
+const assert = require('assert')
+
+describe('Desafio 1 - Etapa 2', function() {
+  this.timeout(30000)
+  let driver
+  let vars
+  beforeEach(async function() {
+    driver = await new Builder().forBrowser('chrome').build()
+    vars = {}
+  })
+  afterEach(async function() {
+    await driver.quit();
+  })
+  it('Desafio 1 - Etapa 2', async function() {
+    await driver.get("http://automationpractice.com/index.php?controller=order")
+    await driver.findElement(By.css(".logo")).click()
+    await driver.findElement(By.id("search_query_top")).click()
+    await driver.findElement(By.id("search_query_top")).sendKeys("Blouse")
+    await driver.findElement(By.name("submit_search")).click()
+    await driver.findElement(By.css(".product_img_link > .replace-2x")).click()
+    await driver.findElement(By.css(".exclusive > span")).click()
+    await driver.findElement(By.css(".button-medium > span")).click()
+    {
+      const elements = await driver.findElements(By.linkText("Blouse"))
+      assert(elements.length)
+    }
+    assert(await driver.findElement(By.css("#product_price_2_7_0 > .price")).getText() == "$27.00")
+    {
+      const value = await driver.findElement(By.name("quantity_2_7_0_0")).getAttribute("value")
+      assert(value == "1")
+    }
+    {
+      const elements = await driver.findElements(By.linkText("Faded Short Sleeve T-shirts"))
+      assert(elements.length)
+    }
+    assert(await driver.findElement(By.css("#product_price_1_2_0 > .price")).getText() == "$16.51")
+    {
+      const value = await driver.findElement(By.name("quantity_1_2_0_0")).getAttribute("value")
+      assert(value == "1")
+    }
+  })
+})
