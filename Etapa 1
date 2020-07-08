@@ -33,6 +33,6 @@ describe('Desafio 1 - Etapa 1', function() {
       const value = await driver.findElement(By.name("quantity_1_2_0_0")).getAttribute("value")
       assert(value == "1")
     }
-    assert(await driver.findElement(By.id("total_product")).getText() == "$16.51")
+      assert(await driver.findElement(By.css("#product_price_1_2_0 > .price")).getText() == "$16.51")
   })
 })
