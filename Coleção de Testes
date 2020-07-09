@@ -1,0 +1,184 @@
+{
+	"info": {
+		"_postman_id": "3ea2c6ce-22a8-467f-af1b-4de6fa6f536b",
+		"name": "Desafio 2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Autenticação",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "19bc0f92-ebb1-4966-b782-a392a0cb527c",
+						"exec": [
+							"pm.test(\"Login efetuado com sucesso\", function () {\r",
+							"\r",
+							"pm.responseCode === 200;\r",
+							"pm.expect(pm.response.text()).to.include(\"Bearer\")\r",
+							"\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImZ1bGFub0BxYS5jb20iLCJwYXNzd29yZCI6InRlc3RlIiwiaWF0IjoxNTk0MjM5NTYxLCJleHAiOjE1OTQyNDAxNjF9.UERG4PkmnS-NmpqS2yQl6KTaj9WGGVE76in3qhQMsjg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"email\":\"{{user}}\",\r\n\"password\": \"{{pwd}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/login",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Consulta de Produtos",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3e91057b-fc0d-4d6a-9cb1-bf7d51759c51",
+						"exec": [
+							"pm.test(\"Requisição efetuada\", function () {\r",
+							"\r",
+							"pm.responseCode === 200;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"TV Samsung retornada com sucesso\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"Samsung 60 polegadas\");\r",
+							"});\r",
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"pm.environment.set('produto1', jsonData.produtos[0]._id);\r",
+							"pm.environment.set('produto2', jsonData.produtos[1]._id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImZ1bGFub0BxYS5jb20iLCJwYXNzd29yZCI6InRlc3RlIiwiaWF0IjoxNTk0MjM5NTYxLCJleHAiOjE1OTQyNDAxNjF9.UERG4PkmnS-NmpqS2yQl6KTaj9WGGVE76in3qhQMsjg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/produtos",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"produtos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Consulta do Carrinho",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1604408d-ba83-4848-a842-56832a253461",
+						"exec": [
+							"pm.test(\"Requisição efetuada\", function () {\r",
+							"\r",
+							"pm.responseCode === 200;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Mouse Logitech MX Vertical está no carrinho\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.carrinhos[0].produtos[0].idProduto).to.deep.eql(pm.environment.get(\"produto1\"));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"TV Samsung 60 Polegadas está no carrinho\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.carrinhos[0].produtos[1].idProduto).to.deep.eql(pm.environment.get(\"produto2\"));\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImZ1bGFub0BxYS5jb20iLCJwYXNzd29yZCI6InRlc3RlIiwiaWF0IjoxNTk0MjM5NTYxLCJleHAiOjE1OTQyNDAxNjF9.UERG4PkmnS-NmpqS2yQl6KTaj9WGGVE76in3qhQMsjg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/carrinhos",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"carrinhos"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
