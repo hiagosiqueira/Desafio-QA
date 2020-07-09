@@ -1,0 +1,34 @@
+{
+	"id": "4e984d6b-41b8-4c88-b808-4f2e0d70be0d",
+	"name": "Desafio 2",
+	"values": [
+		{
+			"key": "URL",
+			"value": "http://localhost:3000",
+			"enabled": true
+		},
+		{
+			"key": "user",
+			"value": "fulano@qa.com",
+			"enabled": true
+		},
+		{
+			"key": "pwd",
+			"value": "teste",
+			"enabled": true
+		},
+		{
+			"key": "produto1",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "produto2",
+			"value": "",
+			"enabled": true
+		}
+	],
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2020-07-09T00:18:11.659Z",
+	"_postman_exported_using": "Postman/7.27.1"
+}
